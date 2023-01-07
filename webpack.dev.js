@@ -16,24 +16,24 @@ module.exports = merge(common, {
   ],
   devtool: 'inline-source-map',
   devServer: {
-    host: '0.0.0.0',
+    host: '127.0.0.1',
       allowedHosts: [
           'academy',
-          'localhost'
+          '127.0.0.1'
       ],
     proxy: {
         '/api': {
-            target: 'http://brain:8000/',
+            target: 'https://127.0.0.1:8000/',
             changeOrigin: true,
             ws: true
         },
         '/server': {
-            target: 'http://brain:8000/',
+            target: 'http://127.0.0.1:8000/',
             changeOrigin: true,
             ws: true
         },
         '/static': {
-            target: 'http://brain:8000/',
+            target: 'http://127.0.0.1:8000/',
             changeOrigin: true,
             ws: true
         }

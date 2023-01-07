@@ -193,7 +193,7 @@ export default {
         async update_model(question){
             let reqUpdate = new FormData();
             reqUpdate.append('topic_ids', JSON.stringify(question.topic_ids));
-            let updateResponse = await fetchPost(API_URL + 'ca/stats/updatemodeltid', reqUpdate);
+            let updateResponse = await fetchPost(API_URL + 'assistant/stats/updatemodeltid', reqUpdate);
         },
         async next_question(){
 
@@ -213,7 +213,7 @@ export default {
             // --> 2. Next, get next question from backend
             let reqData = new FormData();
             reqData.append('topics', JSON.stringify([]));
-            let dataResponse = await fetchPost(API_URL + 'ca/stats/adaptivequestion',reqData);
+            let dataResponse = await fetchPost(API_URL + 'assistant/stats/adaptivequestion',reqData);
             if (dataResponse.ok) {
                 let data = await dataResponse.json();
                 this.exam[this.current_question].text = data['text']

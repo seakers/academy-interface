@@ -8,13 +8,11 @@ module.exports = merge(common, {
   devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
-        // 'API_URL': JSON.stringify('https://academy-services.selva-research.com:443/api/'), // PROD
-        // 'WS_URL': JSON.stringify('wss://academy-services.selva-research.com:443/api/'),    // PROD
-        'API_URL': JSON.stringify('http://academy-services.selva-research.com:8000/api/'), // PROD 2
-        'WS_URL': JSON.stringify('ws://academy-services.selva-research.com:8000/api/'),    // PROD 2
-        'GRAPH_QL_URL': JSON.stringify('http://3.133.157.232:8080/v1/graphql'),
-        'GRAPH_QL_WS_URL': JSON.stringify('ws://3.133.157.232:8080/v1/graphql'),
-        'GRAPH_QL_WS_URL_SUB': JSON.stringify('ws://3.133.157.232:8080/subscriptions'),
+        'API_URL': JSON.stringify('https://academy.selva-research.com/api/'),
+        'WS_URL': JSON.stringify('wss://academy.selva-research.com/api/'),
+        'GRAPH_QL_URL': JSON.stringify('https://academy.selva-research.com/graphql/v1/graphql'),
+        'GRAPH_QL_WS_URL': JSON.stringify('wss://academy.selva-research.com/graphql/v1/graphql'),
+        'GRAPH_QL_WS_URL_SUB': JSON.stringify('wss://academy.selva-research.com/graphql/subscriptions'),
     })
   ],
 });

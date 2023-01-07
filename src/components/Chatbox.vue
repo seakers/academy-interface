@@ -261,8 +261,9 @@
                 // --> 2. Get recommended material response from Q&A System
                 let more_info = null;
                 if(this.recommender_status){
-                    let dataResponse_lm = await fetchPost(API_URL + 'ca/dialogue/lmcommand',reqData1);
-                    if (dataResponse_lm.ok) {
+                    // let dataResponse_lm = await fetchPost(API_URL + 'ca/dialogue/lmcommand',reqData1);
+                  let dataResponse_lm = await fetchPost(API_URL + 'assistant/lmcommand',reqData1);
+                  if (dataResponse_lm.ok) {
                         let data_lm = await dataResponse_lm.json();
                         // console.log('--> CONFIDENCE DATA',data_lm)
                         if(data_lm['response'] !== 'empty'){
@@ -273,7 +274,8 @@
 
                 // --> 3. Get textual response from Q&A System
 
-                let dataResponse_ca = await fetchPost(API_URL + 'eoss/dialogue/command', reqData2);
+                // let dataResponse_ca = await fetchPost(API_URL + 'eoss/dialogue/command', reqData2);
+                let dataResponse_ca = await fetchPost(API_URL + 'assistant/command', reqData2);
                 if (dataResponse_ca.ok) {
                     let data_ca = await dataResponse_ca.json();
                     console.log('--> ANSWER DATA',data_ca)

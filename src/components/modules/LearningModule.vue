@@ -142,7 +142,7 @@
                                                 </template>
                                             </v-row>
 
-                                            <v-divider></v-divider>
+                                            <v-divider style="margin-top: 5px; margin-bottom: 5px;"></v-divider>
 
 <!--                                        EXPLANATION-->
                                             <v-row no-gutters>
@@ -339,7 +339,7 @@ export default {
             if(slide.graded === true){
                 let reqData = new FormData();
                 reqData.append('slide', JSON.stringify(slide));
-                let dataResponse = await fetchPost(API_URL + 'ca/stats/updatemodel',reqData);
+                let dataResponse = await fetchPost(API_URL + 'assistant/stats/updatemodel',reqData);
             }
         },
     },
