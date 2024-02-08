@@ -6,6 +6,10 @@
             <login-modal></login-modal>
         </v-overlay>
 
+        <v-overlay v-model="experiment_overlay" opacity="0.8" z-index="1000">
+          <experiment-modal></experiment-modal>
+        </v-overlay>
+
 
         <!-- NAVIGATION -->
         <v-navigation-drawer v-model="drawer" app color="primary lighten-1">
@@ -173,13 +177,15 @@
     import {mapState} from "vuex";
     import {ModuleLinkSubscription} from "../store/queries";
     import LoginModal from "./LoginModal.vue";
+    import ExperimentModal from "./ExperimentModal.vue";
     import Chatbox from "./Chatbox.vue";
 
     export default {
         name: "adaptive-testing-page",
         components: {
             Chatbox,
-            LoginModal
+            LoginModal,
+            ExperimentModal,
         },
         data: function () {
             return {
@@ -231,6 +237,14 @@
                 },
                 set(value) {
                     this.$store.commit('set_login_overlay', value);
+                }
+            },
+            experiment_overlay: {
+                get() {
+                    return this.$store.state.user.experiment_overlay;
+                },
+                set(value) {
+                    this.$store.commit('set_experiment_overlay', value);
                 }
             }
         },

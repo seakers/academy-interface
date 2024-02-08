@@ -157,8 +157,8 @@
                             outlined
                             append-icon="mdi-send"
                             background-color="white"
-                            v-on:click:append="send_message()"
-                            @keydown.enter="send_message()"
+                            v-on:click:append="send_generative_message()"
+                            @keydown.enter="send_generative_message()"
                         ></v-text-field>
                     </v-col>
                 </v-row>
@@ -273,15 +273,14 @@
                 }
 
                 // --> 3. Get textual response from Q&A System
-
-                // let dataResponse_ca = await fetchPost(API_URL + 'eoss/dialogue/command', reqData2);
                 let dataResponse_ca = await fetchPost(API_URL + 'assistant/command', reqData2);
                 if (dataResponse_ca.ok) {
                     let data_ca = await dataResponse_ca.json();
                     console.log('--> ANSWER DATA',data_ca)
-                    let text = data_ca['response']['visual_message'][0];
-                    if(typeof text !== 'undefined'){
-                        await this.insert_message(text, 'Daphne', more_info);
+                    let response_obj = data_ca['response'];
+                    if(typeof response_obj !== 'undefined'){
+                       let text = JSON.parse(response_obj)['text'];
+                       await this.insert_message(text, 'Daphne', more_info);
                     }
                 }
                 else{
@@ -290,6 +289,27 @@
 
                 // --> 4. Reset message field to empty
                 this.user_message = '';
+            },
+            async send_generative_message(){
+
+              // --> 1. Add message to current messages string
+              await this.insert_message(this.user_message_object.text, this.user_message_object.sender);
+              let reqData1 = new FormData();
+              reqData1.append('command', this.user_message_object.text);
+              reqData1.append('route', this.$route.path);
+
+              let response = '';
+              let dataResponse_lm = await fetchPost(API_URL + 'assistant/gmcommand',reqData1);
+              if (dataResponse_lm.ok) {
+                  let data_lm = await dataResponse_lm.json();
+                  // console.log('--> CONFIDENCE DATA',data_lm)
+                  if(data_lm['response'] !== 'empty'){
+                    response = data_lm['response'];
+                    console.log("--> RESPONSE", response);
+                  }
+              }
+              console.log('--> INSERTING MESSAGE');
+              await this.insert_message(response, 'Daphne', null);
             },
             async insert_message(text, sender, more_info){
                 let mutation = await this.$apollo.mutate({

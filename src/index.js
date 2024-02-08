@@ -44,6 +44,8 @@ const router = new VueRouter({
     routes // short for `routes: routes`
 })
 
+export const vue_router = router;
+
 
 // --> 2. Build apollo client
 const getHeaders = () => {
@@ -79,24 +81,27 @@ const apolloProvider = new VueApollo({
     defaultClient: client,
 })
 
+export const apollo = apolloProvider.defaultClient;
+
 
 
 // -----------------
 // --- WEBSOCKET ---
 // -----------------
+
+let mutationTypes = ['record_answer_question', 'record_new_question', 'record_start_condition'];
+
 import {wsTools} from "./scripts/websocket-tools";
+import {fetchPost} from "./scripts/fetch-helpers";
 store.subscribe(async (mutation, state) => {
+    // console.log('--> ALL MUTATIONS:', mutation);
 
     // --> Action Tracking
-    if (mutation.type === 'updateClickedArch') {
-        // wsTools.websocket.send(JSON.stringify({
-        //     msg_type: 'context_add',
-        //     new_context: {
-        //         eosscontext: {
-        //             selected_arch_id: mutation.payload
-        //         }
-        //     }
-        // }));
+    if (mutationTypes.includes(mutation.type)) {
+        console.log('--> MUTATION:', mutation);
+        let reqData = new FormData();
+        reqData.append('description', mutation.type);
+        let dataResponse = await fetchPost(API_URL + 'assistant/action',reqData);
     }
 });
 

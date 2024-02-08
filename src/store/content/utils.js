@@ -148,6 +148,163 @@ import LC_7 from './lifecycle-cost-learning-module/Slide7LC.png'
 import LC_8 from './lifecycle-cost-learning-module/Slide8LC.png'
 
 
+// import ITSC_1 from './IntroToSpaceFull/Slide1ITSC.png'
+// import ITSC_2 from './IntroToSpaceFull/Slide2ITSC.png'
+// import ITSC_3 from './IntroToSpaceFull/Slide3ITSC.png'
+// import ITSC_4 from './IntroToSpaceFull/Slide4ITSC.png'
+// import ITSC_5 from './IntroToSpaceFull/Slide5ITSC.png'
+// import ITSC_6 from './IntroToSpaceFull/Slide6ITSC.png'
+// import ITSC_7 from './IntroToSpaceFull/Slide7ITSC.png'
+// import ITSC_8 from './IntroToSpaceFull/Slide8ITSC.png'
+// import ITSC_9 from './IntroToSpaceFull/Slide9ITSC.png'
+// import ITSC_10 from './IntroToSpaceFull/Slide10ITSC.png'
+// import ITSC_11 from './IntroToSpaceFull/Slide11ITSC.png'
+// import ITSC_12 from './IntroToSpaceFull/Slide12ITSC.png'
+// import ITSC_13 from './IntroToSpaceFull/Slide13ITSC.png'
+// import ITSC_14 from './IntroToSpaceFull/Slide14ITSC.png'
+// import ITSC_15 from './IntroToSpaceFull/Slide15ITSC.png'
+// import ITSC_16 from './IntroToSpaceFull/Slide16ITSC.png'
+// import ITSC_17 from './IntroToSpaceFull/Slide17ITSC.png'
+// import ITSC_18 from './IntroToSpaceFull/Slide18ITSC.png'
+// import ITSC_19 from './IntroToSpaceFull/Slide19ITSC.png'
+// import ITSC_20 from './IntroToSpaceFull/Slide20ITSC.png'
+// import ITSC_21 from './IntroToSpaceFull/Slide21ITSC.png'
+// import ITSC_22 from './IntroToSpaceFull/Slide22ITSC.png'
+// import ITSC_23 from './IntroToSpaceFull/Slide23ITSC.png'
+// import ITSC_24 from './IntroToSpaceFull/Slide24ITSC.png'
+// import ITSC_25 from './IntroToSpaceFull/Slide25ITSC.png'
+// import ITSC_26 from './IntroToSpaceFull/Slide26ITSC.png'
+// import ITSC_27 from './IntroToSpaceFull/Slide27ITSC.png'
+// import ITSC_28 from './IntroToSpaceFull/Slide28ITSC.png'
+// import ITSC_29 from './IntroToSpaceFull/Slide29ITSC.png'
+// import ITSC_30 from './IntroToSpaceFull/Slide30ITSC.png'
+// import ITSC_31 from './IntroToSpaceFull/Slide31ITSC.png'
+// import ITSC_32 from './IntroToSpaceFull/Slide32ITSC.png'
+// import ITSC_33 from './IntroToSpaceFull/Slide33ITSC.png'
+// import ITSC_34 from './IntroToSpaceFull/Slide34ITSC.png'
+// import ITSC_35 from './IntroToSpaceFull/Slide35ITSC.png'
+// import ITSC_36 from './IntroToSpaceFull/Slide36ITSC.png'
+// import ITSC_37 from './IntroToSpaceFull/Slide37ITSC.png'
+// import ITSC_38 from './IntroToSpaceFull/Slide38ITSC.png'
+// import ITSC_39 from './IntroToSpaceFull/Slide39ITSC.png'
+// import ITSC_40 from './IntroToSpaceFull/Slide40ITSC.png'
+
+import ITSC_1 from './IntroToSpace/Slide1ITSC.png'
+import ITSC_2 from './IntroToSpace/Slide2ITSC.png'
+import ITSC_3 from './IntroToSpace/Slide3ITSC.png'
+import ITSC_4 from './IntroToSpace/Slide4ITSC.png'
+import ITSC_5 from './IntroToSpace/Slide5ITSC.png'
+import ITSC_6 from './IntroToSpace/Slide6ITSC.png'
+import ITSC_7 from './IntroToSpace/Slide7ITSC.png'
+import ITSC_8 from './IntroToSpace/Slide8ITSC.png'
+import ITSC_9 from './IntroToSpace/Slide9ITSC.png'
+import ITSC_10 from './IntroToSpace/Slide10ITSC.png'
+import ITSC_11 from './IntroToSpace/Slide11ITSC.png'
+import ITSC_12 from './IntroToSpace/Slide12ITSC.png'
+import ITSC_13 from './IntroToSpace/Slide13ITSC.png'
+import ITSC_14 from './IntroToSpace/Slide14ITSC.png'
+import ITSC_15 from './IntroToSpace/Slide15ITSC.png'
+import ITSC_16 from './IntroToSpace/Slide16ITSC.png'
+import ITSC_17 from './IntroToSpace/Slide17ITSC.png'
+import ITSC_18 from './IntroToSpace/Slide18ITSC.png'
+import ITSC_19 from './IntroToSpace/Slide19ITSC.png'
+import ITSC_20 from './IntroToSpace/Slide20ITSC.png'
+import ITSC_21 from './IntroToSpace/Slide21ITSC.png'
+import ITSC_22 from './IntroToSpace/Slide22ITSC.png'
+import ITSC_23 from './IntroToSpace/Slide23ITSC.png'
+import ITSC_24 from './IntroToSpace/Slide24ITSC.png'
+import ITSC_25 from './IntroToSpace/Slide25ITSC.png'
+import ITSC_26 from './IntroToSpace/Slide26ITSC.png'
+import ITSC_27 from './IntroToSpace/Slide27ITSC.png'
+import ITSC_28 from './IntroToSpace/Slide28ITSC.png'
+import ITSC_29 from './IntroToSpace/Slide29ITSC.png'
+
+
+// import SEAO_1 from './SpaceEnvAndOrbitsFull/Slide1SEAO.png'
+// import SEAO_2 from './SpaceEnvAndOrbitsFull/Slide2SEAO.png'
+// import SEAO_3 from './SpaceEnvAndOrbitsFull/Slide3SEAO.png'
+// import SEAO_4 from './SpaceEnvAndOrbitsFull/Slide4SEAO.png'
+// import SEAO_5 from './SpaceEnvAndOrbitsFull/Slide5SEAO.png'
+// import SEAO_6 from './SpaceEnvAndOrbitsFull/Slide6SEAO.png'
+// import SEAO_7 from './SpaceEnvAndOrbitsFull/Slide7SEAO.png'
+// import SEAO_8 from './SpaceEnvAndOrbitsFull/Slide8SEAO.png'
+// import SEAO_9 from './SpaceEnvAndOrbitsFull/Slide9SEAO.png'
+// import SEAO_10 from './SpaceEnvAndOrbitsFull/Slide10SEAO.png'
+// import SEAO_11 from './SpaceEnvAndOrbitsFull/Slide11SEAO.png'
+// import SEAO_12 from './SpaceEnvAndOrbitsFull/Slide12SEAO.png'
+// import SEAO_13 from './SpaceEnvAndOrbitsFull/Slide13SEAO.png'
+// import SEAO_14 from './SpaceEnvAndOrbitsFull/Slide14SEAO.png'
+// import SEAO_15 from './SpaceEnvAndOrbitsFull/Slide15SEAO.png'
+// import SEAO_16 from './SpaceEnvAndOrbitsFull/Slide16SEAO.png'
+// import SEAO_17 from './SpaceEnvAndOrbitsFull/Slide17SEAO.png'
+// import SEAO_18 from './SpaceEnvAndOrbitsFull/Slide18SEAO.png'
+// import SEAO_19 from './SpaceEnvAndOrbitsFull/Slide19SEAO.png'
+// import SEAO_20 from './SpaceEnvAndOrbitsFull/Slide20SEAO.png'
+// import SEAO_21 from './SpaceEnvAndOrbitsFull/Slide21SEAO.png'
+// import SEAO_22 from './SpaceEnvAndOrbitsFull/Slide22SEAO.png'
+// import SEAO_23 from './SpaceEnvAndOrbitsFull/Slide23SEAO.png'
+// import SEAO_24 from './SpaceEnvAndOrbitsFull/Slide24SEAO.png'
+// import SEAO_25 from './SpaceEnvAndOrbitsFull/Slide25SEAO.png'
+// import SEAO_26 from './SpaceEnvAndOrbitsFull/Slide26SEAO.png'
+// import SEAO_27 from './SpaceEnvAndOrbitsFull/Slide27SEAO.png'
+// import SEAO_28 from './SpaceEnvAndOrbitsFull/Slide28SEAO.png'
+// import SEAO_29 from './SpaceEnvAndOrbitsFull/Slide29SEAO.png'
+// import SEAO_30 from './SpaceEnvAndOrbitsFull/Slide30SEAO.png'
+// import SEAO_31 from './SpaceEnvAndOrbitsFull/Slide31SEAO.png'
+// import SEAO_32 from './SpaceEnvAndOrbitsFull/Slide32SEAO.png'
+// import SEAO_33 from './SpaceEnvAndOrbitsFull/Slide33SEAO.png'
+// import SEAO_34 from './SpaceEnvAndOrbitsFull/Slide34SEAO.png'
+// import SEAO_35 from './SpaceEnvAndOrbitsFull/Slide35SEAO.png'
+// import SEAO_36 from './SpaceEnvAndOrbitsFull/Slide36SEAO.png'
+// import SEAO_37 from './SpaceEnvAndOrbitsFull/Slide37SEAO.png'
+// import SEAO_38 from './SpaceEnvAndOrbitsFull/Slide38SEAO.png'
+// import SEAO_39 from './SpaceEnvAndOrbitsFull/Slide39SEAO.png'
+// import SEAO_40 from './SpaceEnvAndOrbitsFull/Slide40SEAO.png'
+// import SEAO_41 from './SpaceEnvAndOrbitsFull/Slide41SEAO.png'
+// import SEAO_42 from './SpaceEnvAndOrbitsFull/Slide42SEAO.png'
+// import SEAO_43 from './SpaceEnvAndOrbitsFull/Slide43SEAO.png'
+// import SEAO_44 from './SpaceEnvAndOrbitsFull/Slide44SEAO.png'
+// import SEAO_45 from './SpaceEnvAndOrbitsFull/Slide45SEAO.png'
+// import SEAO_46 from './SpaceEnvAndOrbitsFull/Slide46SEAO.png'
+// import SEAO_47 from './SpaceEnvAndOrbitsFull/Slide47SEAO.png'
+// import SEAO_48 from './SpaceEnvAndOrbitsFull/Slide48SEAO.png'
+// import SEAO_49 from './SpaceEnvAndOrbitsFull/Slide49SEAO.png'
+
+
+import SEAO_1 from './SpaceEnvAndOrbits/Slide1SEAO.png'
+import SEAO_2 from './SpaceEnvAndOrbits/Slide2SEAO.png'
+import SEAO_3 from './SpaceEnvAndOrbits/Slide3SEAO.png'
+import SEAO_4 from './SpaceEnvAndOrbits/Slide4SEAO.png'
+import SEAO_5 from './SpaceEnvAndOrbits/Slide5SEAO.png'
+import SEAO_6 from './SpaceEnvAndOrbits/Slide6SEAO.png'
+import SEAO_7 from './SpaceEnvAndOrbits/Slide7SEAO.png'
+import SEAO_8 from './SpaceEnvAndOrbits/Slide8SEAO.png'
+import SEAO_9 from './SpaceEnvAndOrbits/Slide9SEAO.png'
+import SEAO_10 from './SpaceEnvAndOrbits/Slide10SEAO.png'
+import SEAO_11 from './SpaceEnvAndOrbits/Slide11SEAO.png'
+import SEAO_12 from './SpaceEnvAndOrbits/Slide12SEAO.png'
+import SEAO_13 from './SpaceEnvAndOrbits/Slide13SEAO.png'
+import SEAO_14 from './SpaceEnvAndOrbits/Slide14SEAO.png'
+import SEAO_15 from './SpaceEnvAndOrbits/Slide15SEAO.png'
+import SEAO_16 from './SpaceEnvAndOrbits/Slide16SEAO.png'
+import SEAO_17 from './SpaceEnvAndOrbits/Slide17SEAO.png'
+import SEAO_18 from './SpaceEnvAndOrbits/Slide18SEAO.png'
+import SEAO_19 from './SpaceEnvAndOrbits/Slide19SEAO.png'
+import SEAO_20 from './SpaceEnvAndOrbits/Slide20SEAO.png'
+import SEAO_21 from './SpaceEnvAndOrbits/Slide21SEAO.png'
+import SEAO_22 from './SpaceEnvAndOrbits/Slide22SEAO.png'
+import SEAO_23 from './SpaceEnvAndOrbits/Slide23SEAO.png'
+import SEAO_24 from './SpaceEnvAndOrbits/Slide24SEAO.png'
+import SEAO_25 from './SpaceEnvAndOrbits/Slide25SEAO.png'
+import SEAO_26 from './SpaceEnvAndOrbits/Slide26SEAO.png'
+import SEAO_27 from './SpaceEnvAndOrbits/Slide27SEAO.png'
+import SEAO_28 from './SpaceEnvAndOrbits/Slide28SEAO.png'
+import SEAO_29 from './SpaceEnvAndOrbits/Slide29SEAO.png'
+import SEAO_30 from './SpaceEnvAndOrbits/Slide30SEAO.png'
+import SEAO_31 from './SpaceEnvAndOrbits/Slide31SEAO.png'
+import SEAO_32 from './SpaceEnvAndOrbits/Slide32SEAO.png'
+
+
 
 export function get_slide_src(src){
     if(src === 'LifecycleCost'){
@@ -562,6 +719,272 @@ export function get_slide_src(src){
     else if(src === 'LC_8'){
             return LC_8;
         }
+    else if(src === 'ITSC_1'){
+            return ITSC_1;
+        }
+    else if(src === 'ITSC_2'){
+            return ITSC_2;
+        }
+    else if(src === 'ITSC_3'){
+            return ITSC_3;
+        }
+    else if(src === 'ITSC_4'){
+            return ITSC_4;
+        }
+    else if(src === 'ITSC_5'){
+            return ITSC_5;
+        }
+    else if(src === 'ITSC_6'){
+            return ITSC_6;
+        }
+    else if(src === 'ITSC_7'){
+            return ITSC_7;
+        }
+    else if(src === 'ITSC_8'){
+            return ITSC_8;
+        }
+    else if(src === 'ITSC_9'){
+            return ITSC_9;
+        }
+    else if(src === 'ITSC_10'){
+            return ITSC_10;
+        }
+    else if(src === 'ITSC_11'){
+            return ITSC_11;
+        }
+    else if(src === 'ITSC_12'){
+            return ITSC_12;
+        }
+    else if(src === 'ITSC_13'){
+            return ITSC_13;
+        }
+    else if(src === 'ITSC_14'){
+            return ITSC_14;
+        }
+    else if(src === 'ITSC_15'){
+            return ITSC_15;
+        }
+    else if(src === 'ITSC_16'){
+            return ITSC_16;
+        }
+    else if(src === 'ITSC_17'){
+            return ITSC_17;
+        }
+    else if(src === 'ITSC_18'){
+            return ITSC_18;
+        }
+    else if(src === 'ITSC_19'){
+            return ITSC_19;
+        }
+    else if(src === 'ITSC_20'){
+            return ITSC_20;
+        }
+    else if(src === 'ITSC_21'){
+            return ITSC_21;
+        }
+    else if(src === 'ITSC_22'){
+            return ITSC_22;
+        }
+    else if(src === 'ITSC_23'){
+            return ITSC_23;
+        }
+    else if(src === 'ITSC_24'){
+            return ITSC_24;
+        }
+    else if(src === 'ITSC_25'){
+            return ITSC_25;
+        }
+    else if(src === 'ITSC_26') {
+            return ITSC_26;
+        }
+    else if(src === 'ITSC_27'){
+            return ITSC_27;
+        }
+    else if(src === 'ITSC_28'){
+            return ITSC_28;
+        }
+    else if(src === 'ITSC_29'){
+            return ITSC_29;
+        }
+    // else if(src === 'ITSC_30'){
+    //         return ITSC_30;
+    //     }
+    // else if(src === 'ITSC_31'){
+    //         return ITSC_31;
+    //     }
+    // else if(src === 'ITSC_32'){
+    //         return ITSC_32;
+    //     }
+    // else if(src === 'ITSC_33'){
+    //         return ITSC_33;
+    //     }
+    // else if(src === 'ITSC_34'){
+    //         return ITSC_34;
+    //     }
+    // else if(src === 'ITSC_35'){
+    //         return ITSC_35;
+    //     }
+    // else if(src === 'ITSC_36'){
+    //         return ITSC_36;
+    //     }
+    // else if(src === 'ITSC_37'){
+    //         return ITSC_37;
+    //     }
+    // else if(src === 'ITSC_38'){
+    //         return ITSC_38;
+    //     }
+    // else if(src === 'ITSC_39'){
+    //         return ITSC_39;
+    //     }
+    // else if(src === 'ITSC_40'){
+    //         return ITSC_40;
+    //     }
 
-
+    else if(src === 'SEAO_1'){
+            return SEAO_1;
+        }
+    else if(src === 'SEAO_2'){
+            return SEAO_2;
+        }
+    else if(src === 'SEAO_3'){
+            return SEAO_3;
+        }
+    else if(src === 'SEAO_4'){
+            return SEAO_4;
+        }
+    else if(src === 'SEAO_5'){
+            return SEAO_5;
+        }
+    else if(src === 'SEAO_6'){
+            return SEAO_6;
+        }
+    else if(src === 'SEAO_7'){
+            return SEAO_7;
+        }
+    else if(src === 'SEAO_8'){
+            return SEAO_8;
+        }
+    else if(src === 'SEAO_9'){
+            return SEAO_9;
+        }
+    else if(src === 'SEAO_10'){
+            return SEAO_10;
+        }
+    else if(src === 'SEAO_11'){
+            return SEAO_11;
+        }
+    else if(src === 'SEAO_12'){
+            return SEAO_12;
+        }
+    else if(src === 'SEAO_13'){
+            return SEAO_13;
+        }
+    else if(src === 'SEAO_14'){
+            return SEAO_14;
+        }
+    else if(src === 'SEAO_15'){
+            return SEAO_15;
+        }
+    else if(src === 'SEAO_16'){
+            return SEAO_16;
+        }
+    else if(src === 'SEAO_17'){
+            return SEAO_17;
+        }
+    else if(src === 'SEAO_18'){
+            return SEAO_18;
+        }
+    else if(src === 'SEAO_19'){
+            return SEAO_19;
+        }
+    else if(src === 'SEAO_20'){
+            return SEAO_20;
+        }
+    else if(src === 'SEAO_21'){
+            return SEAO_21;
+        }
+    else if(src === 'SEAO_22'){
+            return SEAO_22;
+        }
+    else if(src === 'SEAO_23'){
+            return SEAO_23;
+        }
+    else if(src === 'SEAO_24'){
+            return SEAO_24;
+        }
+    else if(src === 'SEAO_25'){
+            return SEAO_25;
+        }
+    else if(src === 'SEAO_26') {
+            return SEAO_26;
+        }
+    else if(src === 'SEAO_27'){
+            return SEAO_27;
+        }
+    else if(src === 'SEAO_28'){
+            return SEAO_28;
+        }
+    else if(src === 'SEAO_29'){
+            return SEAO_29;
+        }
+    else if(src === 'SEAO_30'){
+            return SEAO_30;
+        }
+    else if(src === 'SEAO_31'){
+            return SEAO_31;
+        }
+    else if(src === 'SEAO_32'){
+            return SEAO_32;
+        }
+    // else if(src === 'SEAO_33'){
+    //         return SEAO_33;
+    //     }
+    // else if(src === 'SEAO_34'){
+    //         return SEAO_34;
+    //     }
+    // else if(src === 'SEAO_35'){
+    //         return SEAO_35;
+    //     }
+    // else if(src === 'SEAO_36'){
+    //         return SEAO_36;
+    //     }
+    // else if(src === 'SEAO_37'){
+    //         return SEAO_37;
+    //     }
+    // else if(src === 'SEAO_38'){
+    //         return SEAO_38;
+    //     }
+    // else if(src === 'SEAO_39'){
+    //         return SEAO_39;
+    //     }
+    // else if(src === 'SEAO_40'){
+    //         return SEAO_40;
+    //     }
+    // else if(src === 'SEAO_41'){
+    //         return SEAO_41;
+    //     }
+    // else if(src === 'SEAO_42'){
+    //         return SEAO_42;
+    //     }
+    // else if(src === 'SEAO_43'){
+    //         return SEAO_43;
+    //     }
+    // else if(src === 'SEAO_44'){
+    //         return SEAO_44;
+    //     }
+    // else if(src === 'SEAO_45'){
+    //         return SEAO_45;
+    //     }
+    // else if(src === 'SEAO_46'){
+    //         return SEAO_46;
+    //     }
+    // else if(src === 'SEAO_47'){
+    //         return SEAO_47;
+    //     }
+    // else if(src === 'SEAO_48'){
+    //         return SEAO_48;
+    //     }
+    // else if(src === 'SEAO_49'){
+    //         return SEAO_49;
+    //     }
 }

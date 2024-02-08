@@ -27,13 +27,14 @@
 
                     <v-card-subtitle>
                         <div v-for="(topic, idx) in module.topics" :key="idx">{{ topic }}</div>
+                        <div>Minutes Left: {{ remaining_time }}</div>
                     </v-card-subtitle>
 
                     <v-divider style="margin-top: 0;"></v-divider>
 
                     <v-container>
 
-                        <v-carousel v-model="slide_idx"
+                        <v-carousel v-model="slide_idx" ref="myCarousel"
                                     hide-delimiter-background
                                     hide-delimiters
                         >
@@ -79,21 +80,35 @@
 <!--                            QUIZ START SLIDE-->
                                 <v-container v-if="slide.type === 'quiz_start'">
                                     <v-card elevation="0" style="padding-left: 70px; padding-right: 70px; padding-top: 20px">
-                                        <v-card-title class="justify-center">You have completed the first section of this learning module</v-card-title>
-                                        <v-card-text class=" text-center text-body-1">The second section contains a short exam to gauge your understanding of the presented material. You will have one attempt per question. Continue to the next slide when you are ready to begin the exam.</v-card-text>
+                                        <v-card-title class="justify-center">You have completed the first section of this task</v-card-title>
+                                        <v-card-text class=" text-center text-body-1">The second section contains a short quiz to gauge your understanding of the presented material. You will have one attempt per question, and are allowed to return to the material if necessary (open book). Continue to the next slide when you are ready to begin.</v-card-text>
+<!--                                        <v-btn @click="begin_quiz" color="primary">Begin Quiz</v-btn>-->
                                     </v-card>
                                 </v-container>
 
 <!--                            QUIZ END SLIDE-->
                                 <v-container v-if="slide.type === 'quiz_end'">
                                     <v-card elevation="0" style="padding-left: 70px; padding-right: 70px; padding-top: 20px">
-                                        <v-card-title class="justify-center">Learning Module Complete</v-card-title>
-                                        <v-card-text class="text-center text-body-1">Head to the Mastery page to view your estimated ability level for this topic.</v-card-text>
-                                        <v-card-actions class="justify-center">
-                                            <v-btn color="primary" v-on:click="go_to_mastery()" class="align-center">Mastery <v-icon right>mdi-arrow-right</v-icon></v-btn>
-                                        </v-card-actions>
+                                        <v-card-title class="justify-center">Assessment Complete</v-card-title>
+                                        <v-card-text class="text-center text-body-1">This is the end of the module quiz. Please proceed to the module exam when ready.</v-card-text>
+<!--                                        <v-card-actions class="justify-center">-->
+<!--                                            <v-btn color="primary" v-on:click="go_to_mastery()" class="align-center">Mastery <v-icon right>mdi-arrow-right</v-icon></v-btn>-->
+<!--                                        </v-card-actions>-->
+                                        <v-btn @click="begin_exam" color="primary">Begin Exam</v-btn>
                                     </v-card>
                                 </v-container>
+
+
+<!--                            EXAM FINISH SLIDE-->
+                              <v-container v-if="slide.type === 'exam_finish'">
+                                <v-card elevation="0" style="padding-left: 70px; padding-right: 70px; padding-top: 20px">
+                                  <v-card-title class="justify-center">Task Complete</v-card-title>
+                                  <v-card-text class="text-center text-body-1">This slide denotes the end of the module exam. If this is the second learning module you have studied, the experiment has finished. Else, select the continue button below to continue to the next stage.</v-card-text>
+                                                                          <v-card-actions class="justify-center">
+                                                                              <v-btn color="primary" v-on:click="go_to_next_condition()" class="align-center">Continue<v-icon right>mdi-arrow-right</v-icon></v-btn>
+                                                                          </v-card-actions>
+                                </v-card>
+                              </v-container>
 
 
 
@@ -142,19 +157,19 @@
                                                 </template>
                                             </v-row>
 
-                                            <v-divider style="margin-top: 5px; margin-bottom: 5px;"></v-divider>
+<!--                                            <v-divider style="margin-top: 5px; margin-bottom: 5px;"></v-divider>-->
 
 <!--                                        EXPLANATION-->
-                                            <v-row no-gutters>
-                                                <v-expansion-panels :value="show_answer" multiple>
-                                                    <v-expansion-panel :disabled="!slide.answered">
-                                                        <v-expansion-panel-header>Why?</v-expansion-panel-header>
-                                                        <v-expansion-panel-content>
-                                                            {{ slide.question.explanation }}
-                                                        </v-expansion-panel-content>
-                                                    </v-expansion-panel>
-                                                </v-expansion-panels>
-                                            </v-row>
+<!--                                            <v-row no-gutters>-->
+<!--                                                <v-expansion-panels :value="show_answer" multiple>-->
+<!--                                                    <v-expansion-panel :disabled="!slide.answered">-->
+<!--                                                        <v-expansion-panel-header>Why?</v-expansion-panel-header>-->
+<!--                                                        <v-expansion-panel-content>-->
+<!--                                                            {{ slide.question.explanation }}-->
+<!--                                                        </v-expansion-panel-content>-->
+<!--                                                    </v-expansion-panel>-->
+<!--                                                </v-expansion-panels>-->
+<!--                                            </v-row>-->
 
                                         </v-container>
                                     </v-card>
@@ -189,6 +204,9 @@ export default {
             slide_idx: 0,
             module: {},
             slides: [],
+            question_records: [],
+            remaining_time: 0,
+            timer: null,
 
             // --> Expansion panel answer
             show_answer: [],
@@ -208,6 +226,8 @@ export default {
     computed: {
         ...mapState({
             user_id: state => state.user.user_id,
+            experiment_info: state => state.user.experiment_info,
+            section_end_time: state => state.user.section_end_time,
         }),
         module_name(){
             return this.$route.params.name
@@ -217,6 +237,14 @@ export default {
         },
     },
     methods: {
+        async begin_quiz(){
+            await this.$store.dispatch('start_quiz');
+            this.$refs.myCarousel.next();
+        },
+        async begin_exam(){
+            await this.$store.dispatch('start_exam');
+            this.$refs.myCarousel.next();
+        },
         async update_slide(slide){
             console.log('--> UPDATING SLIDE');
             let mutation = await this.$apollo.mutate({
@@ -266,23 +294,40 @@ export default {
             if(this.slides.length === 0 || typeof this.slides[this.slide_idx] === 'undefined'){
                 return;
             }
-
             console.log('--> SLIDE LOGIC');
+            if(this.slides[this.slide_idx].type === 'question'){
+                if(!this.question_records.includes(this.slide_idx)){
+                    this.$store.commit('record_new_question');
+                    this.question_records.push(this.slide_idx);
+                }
+            }
+
+
             // --> 1. Logic: disable_back
             this.disable_back = false;
             if(this.slide_idx === 0){
                 this.disable_back = true;
             }
+            if(this.slides[this.slide_idx].type === 'question'){
+                if(this.slides[this.slide_idx].graded === true){
+                    this.disable_back = true;
+                }
+            }
+
 
             // --> 2. Logic: disable_next
             this.disable_next = false;
             if((this.slide_idx + 1) === this.slides.length){
                 this.disable_next = true;
+                this.disable_back = true;
             }
             if(this.slides[this.slide_idx].type === 'question'){
                 if(this.slides[this.slide_idx].answered === false){
                     this.disable_next = true;
                 }
+            }
+            if(this.slides[this.slide_idx].type === 'quiz_end'){
+                this.disable_next = true;
             }
         },
         async go_to_mastery(){
@@ -290,6 +335,13 @@ export default {
             if (this.$route.path !== '/mastery') {
                 await this.$router.push('/mastery');
             }
+        },
+        async go_to_next_condition(){
+            // this.slide_idx = 0;
+            await this.$store.dispatch('increment_stage');
+            await this.$store.dispatch('load_user_experiment_info');
+            await this.$store.dispatch('start_condition');
+            // this.slide_idx = 0;
         },
         async check_answer(slide){
             this.correct_noti = false;
@@ -299,7 +351,7 @@ export default {
             let correct = slide.question.choices[slide.choice_id].correct;
 
             // --> 2. Determine number of attempts based on whether the question is graded or not
-            let num_attempts = 2;
+            let num_attempts = 3;
             if(slide.graded === true){
                 num_attempts = 1
             }
@@ -341,6 +393,30 @@ export default {
                 reqData.append('slide', JSON.stringify(slide));
                 let dataResponse = await fetchPost(API_URL + 'assistant/stats/updatemodel',reqData);
             }
+
+            // --> 8. Await
+            if(slide.choice_id !== -1){
+                await this.$store.commit('record_answer_question');
+            }
+        },
+        startTimer() {
+            if (this.timer) {
+                clearInterval(this.timer);
+            }
+
+            // Set the timer to update every 1000 milliseconds (1 second)
+            this.timer = setInterval(() => {
+                // Calculate the remaining time in seconds
+                this.remaining_time =  Math.floor((this.section_end_time - Math.floor(Date.now() / 1000)) / 60);
+                // console.log('--> REMAINING TIME: ', this.remaining_time, this.section_end_time);
+
+                // Clear the interval if the time has run out
+                if (this.remaining_time <= 0) {
+                    clearInterval(this.timer);
+                    this.remaining_time = 0;
+                    // Do any additional logic when the time has run out
+                }
+            }, 1000);
         },
     },
     watch: {
@@ -354,6 +430,9 @@ export default {
             this.show_overlay = false;
             console.log('--> REFETCHING MODULE DATA');
             this.$forceUpdate();
+        },
+        section_end_time(){
+            this.startTimer();
         }
     },
     apollo: {
@@ -435,10 +514,15 @@ export default {
     },
     mounted() {
         this.slide_logic();
+        this.startTimer();
     },
     beforeUpdate(){
         this.slide_logic();
-    }
+    },
+    beforeDestroy() {
+        // Clear the interval when the component is destroyed
+        clearInterval(this.timer);
+    },
 
 }
 </script>

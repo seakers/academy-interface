@@ -270,7 +270,28 @@ const SlideIdxSub = gql`
 
 
 
-
+const ExperimentQuery = gql`
+    query ExperimentQuery($user_id: Int!) {
+        experiment: UserExperiment(where: {user_id: {_eq: $user_id}}) {
+            assistant
+            id
+            started
+            task_1_exam_score
+            task_1_exam_time
+            task_1_quiz_score
+            task_1_quiz_time
+            task_1_study_time
+            task_2_exam_score
+            task_2_exam_time
+            task_2_quiz_score
+            task_2_quiz_time
+            task_2_study_time
+            task_order
+            stage
+            assistant_order
+      }
+    }
+`;
 
 
 
@@ -356,6 +377,14 @@ const UpdateSlide = gql`
     mutation UpdateSlide($slide_id: Int!, $answered: Boolean!, $correct: Boolean!, $attempts: Int!, $choice_id: Int!) {
         update_Slide_by_pk(pk_columns: {id: $slide_id}, _set: {answered: $answered, correct: $correct, attempts: $attempts, choice_id: $choice_id}) {
             id
+        }
+    }
+`;
+
+const UpdateStage = gql`
+    mutation UpdateStage($user_id: Int!, $stage_num: Int!) {
+        update_UserExperiment(where: {user_id: {_eq: $user_id}}, _set: {stage: $stage_num}) {
+            affected_rows
         }
     }
 `;
@@ -469,4 +498,6 @@ export {
     InsertExamQuestion,
     ExamQuery,
     SubmitExamQuery,
+    ExperimentQuery,
+    UpdateStage
 }

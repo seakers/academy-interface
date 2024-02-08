@@ -35,9 +35,6 @@
 
 <script>
 
-
-
-
     import {fetchPost} from "../scripts/fetch-helpers";
 
     export default {
@@ -77,7 +74,9 @@
                         await this.$store.commit('set_user_id', data['pk']);
                         await this.$store.commit('set_user_username', data['username']);
                         await this.$store.commit('set_user_email', data['email']);
+                        await this.$store.dispatch('load_user_experiment_info');
                         await this.$store.commit('set_login_overlay', false);
+                        await this.$store.dispatch('initialize_experiment');
                     }
                     else {
                         this.error_noti = true;
