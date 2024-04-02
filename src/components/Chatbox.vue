@@ -200,6 +200,17 @@
             },
             recommender_status() {
                 return this.settings.includes(0);
+            },
+
+            //////////////////////////// GETTERS FOR CURRENT SLIDE INFO /////////////////////
+            currentTopic() {
+                return this.$store.getters.getCurrentTopic;
+            },
+            currentModule() {
+                return this.$store.getters.getCurrentModule;
+            },
+            currentSlide() {
+                return this.$store.getters.getCurrentSlide;
             }
         },
         methods: {
@@ -291,25 +302,33 @@
                 this.user_message = '';
             },
             async send_generative_message(){
+                // let slideInfo = JSON.stringify({topic: this.currentTopic, module: this.currentModule, slide: this.currentSlide});
+                // console.log("TESTTTTTT", slideInfo)
 
-              // --> 1. Add message to current messages string
-              await this.insert_message(this.user_message_object.text, this.user_message_object.sender);
-              let reqData1 = new FormData();
-              reqData1.append('command', this.user_message_object.text);
-              reqData1.append('route', this.$route.path);
+                // --> 1. Add message to current messages string
+                await this.insert_message(this.user_message_object.text, this.user_message_object.sender);
+                let reqData1 = new FormData();
+                reqData1.append('command', this.user_message_object.text);
+                reqData1.append('route', this.$route.path);
 
-              let response = '';
-              let dataResponse_lm = await fetchPost(API_URL + 'assistant/gmcommand',reqData1);
-              if (dataResponse_lm.ok) {
-                  let data_lm = await dataResponse_lm.json();
-                  // console.log('--> CONFIDENCE DATA',data_lm)
-                  if(data_lm['response'] !== 'empty'){
+                // ############## ADD FOR GPT VISION (SLIDE INFO) #####################
+                reqData1.append('vision', true);
+                let slideInfo = JSON.stringify({topic: this.currentTopic, module: this.currentModule, slide: this.currentSlide});
+                reqData1.append('slide_info', slideInfo);
+                // #######################################################
+
+                let response = '';
+                let dataResponse_lm = await fetchPost(API_URL + 'assistant/gmcommand',reqData1);
+                if (dataResponse_lm.ok) {
+                    let data_lm = await dataResponse_lm.json();
+                    // console.log('--> CONFIDENCE DATA',data_lm)
+                    if(data_lm['response'] !== 'empty'){
                     response = data_lm['response'];
                     console.log("--> RESPONSE", response);
-                  }
-              }
-              console.log('--> INSERTING MESSAGE');
-              await this.insert_message(response, 'Daphne', null);
+                    }
+                }
+                console.log('--> INSERTING MESSAGE');
+                await this.insert_message(response, 'Daphne', null);
             },
             async insert_message(text, sender, more_info){
                 let mutation = await this.$apollo.mutate({

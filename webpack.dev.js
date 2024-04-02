@@ -7,11 +7,14 @@ module.exports = merge(common, {
   mode: 'development',
   plugins: [
     new webpack.DefinePlugin({
-        'API_URL': JSON.stringify('http://localhost:8080/api/'),
-        'WS_URL': JSON.stringify('ws://localhost:8080/api/'),
-        'GRAPH_QL_URL': JSON.stringify('http://localhost:8080/v1/graphql'),
-        'GRAPH_QL_WS_URL': JSON.stringify('ws://localhost:8080/v1/graphql'),
-        'GRAPH_QL_WS_URL_SUB': JSON.stringify('ws://localhost:8080/subscriptions'),
+        'API_URL': JSON.stringify('http://localhost:8000/api/'),
+        'WS_URL': JSON.stringify('ws://localhost:8000/api/'),
+        // 'GRAPH_QL_URL': JSON.stringify('http://localhost:8000/v1/graphql'),
+        // 'GRAPH_QL_URL': JSON.stringify('https://academy.selva-research.com/graphql/v1/graphql'),
+        'GRAPH_QL_WS_URL': JSON.stringify('ws://localhost:6002/v1/graphql'),
+        // 'GRAPH_QL_WS_URL': JSON.stringify('wss://academy.selva-research.com/graphql/v1/graphql'),
+        'GRAPH_QL_WS_URL_SUB': JSON.stringify('ws://localhost:6002/subscriptions'),
+        // 'GRAPH_QL_WS_URL_SUB': JSON.stringify('wss://academy.selva-research.com/graphql/subscriptions'),
     })
   ],
   devtool: 'inline-source-map',

@@ -40,6 +40,10 @@ const state = {
     drawer: true,
     drawer_store: null,
 
+    // GLOBAL CURRENT MODULE ID, TOPIC ID, SLIDE INDEX 
+    curr_topic : 1,
+    curr_module : 1,
+    curr_slide : 1,
 
     // --> Chatbox Drawer State <--
     chatbox: false,
@@ -53,7 +57,18 @@ const state = {
 };
 
 const getters = {
-
+    // Getter for curr_topic
+    getCurrentTopic(state) {
+        return state.curr_topic;
+    },
+    // Getter for curr_module
+    getCurrentModule(state) {
+        return state.curr_module;
+    },
+    // Getter for curr_slide
+    getCurrentSlide(state) {
+        return state.curr_slide;
+    },
 };
 
 const actions = {
@@ -255,7 +270,19 @@ const mutations = {
         state.section_end_time = section_end_time;
     },
 
-
+    /////////////////////////////////// MUTATION FOR SETTING CURRENT SLIDE INFO///////////////////
+    async set_curr_topic(state, currentT){
+        console.log("################## CURRENT TOPIC SET ##################", currentT)
+        state.curr_topic = currentT;
+    },
+    async set_curr_module(state, currentM){
+        console.log("################## CURRENT Module SET ##################", currentM)
+        state.curr_module = currentM;
+    },
+    async set_curr_slide(state, currentS){
+        console.log("################## CURRENT Slide SET ##################", currentS)
+        state.curr_slide = currentS;
+    },
 };
 
 export default {

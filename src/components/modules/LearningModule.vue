@@ -260,6 +260,9 @@ export default {
             });
         },
         async update_slide_idx(){
+            ////////////////////////// GPT VISION //////////////////////////////
+            await this.updateStore()
+            /////////////////////////////////////////////////////////////////////
             console.log('--> UPDATING SLIDE IDX');
             let mutation = await this.$apollo.mutate({
                 mutation: UpdateSlideIdx,
@@ -270,6 +273,13 @@ export default {
                 },
                 update: (cache, { data: { result } }) => {},
             });
+        },
+        async updateStore(){
+            ////////////////////////// GPT VISION //////////////////////////////
+            ////// UPDATE GLOBAL STATE VARIABLE (VIA CALLING MUTATION) MODULE ID, AND SLIDE INDEX///
+            this.$store.commit('set_curr_topic', 1); ////////////// TO-DO CHANGE THIS HARDCODED TOPIC ///////////
+            this.$store.commit('set_curr_module', this.module_id);
+            this.$store.commit('set_curr_slide', this.slide_idx);
         },
         get_slide_image(src){
             return get_slide_src(src);
@@ -508,6 +518,9 @@ export default {
                     let return_idx = result.data.entry[0].slide_idx;
 
                     this.slide_idx = return_idx;
+                    ////////////////////////// GPT VISION //////////////////////////////
+                    this.updateStore();
+                    ////////////////////////////////////////////////////////////////////
                 },
             }
         }
