@@ -304,6 +304,71 @@ import SEAO_30 from './SpaceEnvAndOrbits/Slide30SEAO.png'
 import SEAO_31 from './SpaceEnvAndOrbits/Slide31SEAO.png'
 import SEAO_32 from './SpaceEnvAndOrbits/Slide32SEAO.png'
 
+// --------
+
+
+import JD1_1 from './jordan-m1/Slide1.png'
+import JD1_2 from './jordan-m1/Slide2.png'
+import JD1_3 from './jordan-m1/Slide3.png'
+import JD1_4 from './jordan-m1/Slide4.png'
+import JD1_5 from './jordan-m1/Slide5.png'
+import JD1_6 from './jordan-m1/Slide6.png'
+import JD1_7 from './jordan-m1/Slide7.png'
+import JD1_8 from './jordan-m1/Slide8.png'
+import JD1_9 from './jordan-m1/Slide9.png'
+import JD1_10 from './jordan-m1/Slide10.png'
+import JD1_11 from './jordan-m1/Slide11.png'
+import JD1_12 from './jordan-m1/Slide12.png'
+import JD1_13 from './jordan-m1/Slide13.png'
+import JD1_14 from './jordan-m1/Slide14.png'
+import JD1_15 from './jordan-m1/Slide15.png'
+import JD1_16 from './jordan-m1/Slide16.png'
+import JD1_17 from './jordan-m1/Slide17.png'
+import JD1_18 from './jordan-m1/Slide18.png'
+import JD1_19 from './jordan-m1/Slide19.png'
+import JD1_20 from './jordan-m1/Slide20.png'
+import JD1_21 from './jordan-m1/Slide21.png'
+import JD1_22 from './jordan-m1/Slide22.png'
+import JD1_23 from './jordan-m1/Slide23.png'
+import JD1_24 from './jordan-m1/Slide24.png'
+import JD1_25 from './jordan-m1/Slide25.png'
+import JD1_26 from './jordan-m1/Slide26.png'
+import JD1_27 from './jordan-m1/Slide27.png'
+import JD1_28 from './jordan-m1/Slide28.png'
+import JD1_29 from './jordan-m1/Slide29.png'
+
+import JD2_1 from './jordan-m2/Slide1.png'
+import JD2_2 from './jordan-m2/Slide2.png'
+import JD2_3 from './jordan-m2/Slide3.png'
+import JD2_4 from './jordan-m2/Slide4.png'
+import JD2_5 from './jordan-m2/Slide5.png'
+import JD2_6 from './jordan-m2/Slide6.png'
+import JD2_7 from './jordan-m2/Slide7.png'
+import JD2_8 from './jordan-m2/Slide8.png'
+import JD2_9 from './jordan-m2/Slide9.png'
+import JD2_10 from './jordan-m2/Slide10.png'
+import JD2_11 from './jordan-m2/Slide11.png'
+import JD2_12 from './jordan-m2/Slide12.png'
+import JD2_13 from './jordan-m2/Slide13.png'
+import JD2_14 from './jordan-m2/Slide14.png'
+import JD2_15 from './jordan-m2/Slide15.png'
+import JD2_16 from './jordan-m2/Slide16.png'
+import JD2_17 from './jordan-m2/Slide17.png'
+import JD2_18 from './jordan-m2/Slide18.png'
+import JD2_19 from './jordan-m2/Slide19.png'
+import JD2_20 from './jordan-m2/Slide20.png'
+import JD2_21 from './jordan-m2/Slide21.png'
+import JD2_22 from './jordan-m2/Slide22.png'
+import JD2_23 from './jordan-m2/Slide23.png'
+import JD2_24 from './jordan-m2/Slide24.png'
+import JD2_25 from './jordan-m2/Slide25.png'
+import JD2_26 from './jordan-m2/Slide26.png'
+import JD2_27 from './jordan-m2/Slide27.png'
+import JD2_28 from './jordan-m2/Slide28.png'
+import JD2_29 from './jordan-m2/Slide29.png'
+import JD2_30 from './jordan-m2/Slide30.png'
+import JD2_31 from './jordan-m2/Slide31.png'
+import JD2_32 from './jordan-m2/Slide32.png'
 
 
 export function get_slide_src(src){
@@ -987,4 +1052,195 @@ export function get_slide_src(src){
     // else if(src === 'SEAO_49'){
     //         return SEAO_49;
     //     }
+
+
+    else if(src === 'JD1_1'){
+        return JD1_1;
+    }
+    else if(src === 'JD1_2'){
+        return JD1_2;
+    }
+    else if(src === 'JD1_3'){
+        return JD1_3;
+    }
+    else if(src === 'JD1_4'){
+        return JD1_4;
+    }
+    else if(src === 'JD1_5'){
+        return JD1_5;
+    }
+    else if(src === 'JD1_6'){
+        return JD1_6;
+    }
+    else if(src === 'JD1_7'){
+        return JD1_7;
+    }
+    else if(src === 'JD1_8'){
+        return JD1_8;
+    }
+    else if(src === 'JD1_9'){
+        return JD1_9;
+    }
+    else if(src === 'JD1_10'){
+        return JD1_10;
+    }
+    else if(src === 'JD1_11'){
+        return JD1_11;
+    }
+    else if(src === 'JD1_12'){
+        return JD1_12;
+    }
+    else if(src === 'JD1_13'){
+        return JD1_13;
+    }
+    else if(src === 'JD1_14'){
+        return JD1_14;
+    }
+    else if(src === 'JD1_15'){
+        return JD1_15;
+    }
+    else if(src === 'JD1_16'){
+        return JD1_16;
+    }
+    else if(src === 'JD1_17'){
+        return JD1_17;
+    }
+    else if(src === 'JD1_18'){
+        return JD1_18;
+    }
+    else if(src === 'JD1_19'){
+        return JD1_19;
+    }
+    else if(src === 'JD1_20'){
+        return JD1_20;
+    }
+    else if(src === 'JD1_21'){
+        return JD1_21;
+    }
+    else if(src === 'JD1_22'){
+        return JD1_22;
+    }
+    else if(src === 'JD1_23'){
+        return JD1_23;
+    }
+    else if(src === 'JD1_24'){
+        return JD1_24;
+    }
+    else if(src === 'JD1_25'){
+        return JD1_25;
+    }
+    else if(src === 'JD1_26'){
+        return JD1_26;
+    }
+    else if(src === 'JD1_27'){
+        return JD1_27;
+    }
+    else if(src === 'JD1_28'){
+        return JD1_28;
+    }
+    else if(src === 'JD1_29'){
+        return JD1_29;
+    }
+
+    else if(src === 'JD2_1'){
+        return JD2_1;
+    }
+    else if(src === 'JD2_2'){
+        return JD2_2;
+    }
+    else if(src === 'JD2_3'){
+        return JD2_3;
+    }
+    else if(src === 'JD2_4'){
+        return JD2_4;
+    }
+    else if(src === 'JD2_5'){
+        return JD2_5;
+    }
+    else if(src === 'JD2_6'){
+        return JD2_6;
+    }
+    else if(src === 'JD2_7'){
+        return JD2_7;
+    }
+    else if(src === 'JD2_8'){
+        return JD2_8;
+    }
+    else if(src === 'JD2_9'){
+        return JD2_9;
+    }
+    else if(src === 'JD2_10'){
+        return JD2_10;
+    }
+    else if(src === 'JD2_11'){
+        return JD2_11;
+    }
+    else if(src === 'JD2_12'){
+        return JD2_12;
+    }
+    else if(src === 'JD2_13'){
+        return JD2_13;
+    }
+    else if(src === 'JD2_14'){
+        return JD2_14;
+    }
+    else if(src === 'JD2_15'){
+        return JD2_15;
+    }
+    else if(src === 'JD2_16'){
+        return JD2_16;
+    }
+    else if(src === 'JD2_17'){
+        return JD2_17;
+    }
+    else if(src === 'JD2_18'){
+        return JD2_18;
+    }
+    else if(src === 'JD2_19'){
+        return JD2_19;
+    }
+    else if(src === 'JD2_20'){
+        return JD2_20;
+    }
+    else if(src === 'JD2_21'){
+        return JD2_21;
+    }
+    else if(src === 'JD2_22'){
+        return JD2_22;
+    }
+    else if(src === 'JD2_23'){
+        return JD2_23;
+    }
+    else if(src === 'JD2_24'){
+        return JD2_24;
+    }
+    else if(src === 'JD2_25'){
+        return JD2_25;
+    }
+    else if(src === 'JD2_26'){
+        return JD2_26;
+    }
+    else if(src === 'JD2_27'){
+        return JD2_27;
+    }
+    else if(src === 'JD2_28'){
+        return JD2_28;
+    }
+    else if(src === 'JD2_29'){
+        return JD2_29;
+    }
+    else if(src === 'JD2_30'){
+        return JD2_30;
+    }
+    else if(src === 'JD2_31'){
+        return JD2_31;
+    }
+    else if(src === 'JD2_32'){
+        return JD2_32;
+    }
+
+
+
+
+    
 }

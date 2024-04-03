@@ -89,7 +89,7 @@ export const apollo = apolloProvider.defaultClient;
 // --- WEBSOCKET ---
 // -----------------
 
-let mutationTypes = ['record_answer_question', 'record_new_question', 'record_start_condition'];
+let mutationTypes = ['record_answer_question', 'record_new_question', 'record_start_condition', 'record_tlx_survey'];
 
 import {wsTools} from "./scripts/websocket-tools";
 import {fetchPost} from "./scripts/fetch-helpers";

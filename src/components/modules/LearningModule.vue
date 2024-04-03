@@ -110,6 +110,14 @@
                                 </v-card>
                               </v-container>
 
+                                <!--                            TLX Survey -->
+                                <v-container v-if="slide.type === 'tlx_survey'">
+                                    <v-card elevation="0" style="padding-left: 70px; padding-right: 70px; padding-top: 20px">
+                                        <v-card-title class="justify-center">TLX Survey</v-card-title>
+                                        <v-card-text class="text-center text-body-1">You have completed the module exam. Please alert your proctor, and you will be moved on to a brief survey.</v-card-text>
+                                    </v-card>
+                                </v-container>
+
 
 
 <!--                            QUESTION SLIDE-->
@@ -300,6 +308,9 @@ export default {
                     this.$store.commit('record_new_question');
                     this.question_records.push(this.slide_idx);
                 }
+            }
+            if(this.slides[this.slide_idx].type === 'tlx_survey'){
+                this.$store.commit('record_tlx_survey');
             }
 
 

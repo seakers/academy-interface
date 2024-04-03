@@ -39,6 +39,7 @@ const state = {
     // --> Navigation Drawer State <--
     drawer: true,
     drawer_store: null,
+    tlx_survey_cnt: 0,
 
 
     // --> Chatbox Drawer State <--
@@ -250,6 +251,9 @@ const mutations = {
     },
     async record_start_condition(state){
         state.start_condition_cnt += 1;
+    },
+    async record_tlx_survey(state){
+        state.tlx_survey_cnt += 1;
     },
     set_section_end_time(state, section_end_time){
         state.section_end_time = section_end_time;
