@@ -440,6 +440,7 @@ const ExamQuery = gql`
             questions: TestQuestions {
                 answered
                 correct
+                question_id
             }
         }
     }

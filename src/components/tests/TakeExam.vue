@@ -193,6 +193,12 @@ export default {
         async update_model(question){
             let reqUpdate = new FormData();
             reqUpdate.append('topic_ids', JSON.stringify(question.topic_ids));
+            console.log("############# question", question)
+            ///////////////////////// UPDATE AB QUESTION Parameter UPDATION AFTER EACH USER TAKES TEST AND SUBMIT ANSWERS /////////////
+
+            reqUpdate.append('question_ids', JSON.stringify([question.question_id, question.answer]));
+            ////////////////////////////////////////////////////////////////////////// 
+
             let updateResponse = await fetchPost(API_URL + 'assistant/stats/updatemodeltid', reqUpdate);
         },
         async next_question(){
