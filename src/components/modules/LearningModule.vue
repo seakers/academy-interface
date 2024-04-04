@@ -103,7 +103,7 @@
                               <v-container v-if="slide.type === 'exam_finish'">
                                 <v-card elevation="0" style="padding-left: 70px; padding-right: 70px; padding-top: 20px">
                                   <v-card-title class="justify-center">Task Complete</v-card-title>
-                                  <v-card-text class="text-center text-body-1">This slide denotes the end of the module exam. If this is the second learning module you have studied, the experiment has finished. Else, select the continue button below to continue to the next stage.</v-card-text>
+                                  <v-card-text class="text-center text-body-1">This slide denotes the end of the module exam. You have now unlocked adaptive testing on the content of this module.</v-card-text>
                                                                           <v-card-actions class="justify-center">
                                                                               <v-btn color="primary" v-on:click="go_to_next_condition()" class="align-center">Continue<v-icon right>mdi-arrow-right</v-icon></v-btn>
                                                                           </v-card-actions>
