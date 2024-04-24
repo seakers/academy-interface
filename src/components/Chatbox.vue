@@ -171,7 +171,7 @@
 <script>
     import {mapState} from "vuex";
     import {MessageSubscription, InsertMessage, ClearMessage, SlidesQueryFast, UpdateSlideIdx} from "../store/queries";
-    import {fetchPost} from "../scripts/fetch-helpers";
+    import {fetchGet, fetchPost} from "../scripts/fetch-helpers";
     import * as _ from "lodash-es";
 
     export default {
@@ -183,6 +183,7 @@
                 user_message: '',
 
                 settings: [0],
+                system_message: "",
             }
         },
         computed: {
@@ -253,6 +254,22 @@
                 let query_slides = slide_query['data']['slides'];
                 return query_slides[slide_num].idx;
             },
+
+            /// GET SYSTEM MESSAGE ///////
+            async get_system_message(){
+                let dataResponse = await fetchGet(API_URL + 'assistant/getsysmessage');
+                let system_message_json = await dataResponse.json();
+                this.system_message = system_message_json.system_message
+            },
+
+            /// SAVE SYSTEM MESSAGE ///////
+            async update_system_message(){
+                let reqData = new FormData();
+                reqData.append('message', this.system_message);
+                let dataResponse = await fetchPost(API_URL + 'assistant/sysmessage', reqData);
+                console.log("dataResponse", dataResponse)
+            },
+            
             get_message_style(type){
                 if(type === 'User'){
                     return 'border-radius: 28px 28px 28px 4px; margin-right: 40px;'

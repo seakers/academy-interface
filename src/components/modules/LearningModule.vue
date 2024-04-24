@@ -27,6 +27,7 @@
 
                     <v-card-subtitle>
                         <div v-for="(topic, idx) in module.topics" :key="idx">{{ topic }}</div>
+                        <div>Slide: {{ slide_idx + 1 }}</div>
                         <div>Minutes Left: {{ remaining_time }}</div>
                     </v-card-subtitle>
 

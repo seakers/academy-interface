@@ -10,6 +10,29 @@
                 </v-card>
             </v-col>
         </v-row>
+        <!-- ################ ADDING MASTERY TAB FOR STRENGTHS, WEAKNESS, RECOMMENDATIONS #################### -->
+        <v-row justify="center">
+            <v-col>
+                <v-card elevation="0">
+                    <v-card-title>Grade Report</v-card-title>
+                    <v-container v-if="test_history.length > 0">
+                        <v-row>
+                            <v-col>
+                                <div>STRENGTHS</div>
+                            </v-col>
+                            <v-divider vertical></v-divider>
+                            <v-col>
+                                <div>WEAKNESS</div>
+                            </v-col>
+                            <v-divider vertical></v-divider>
+                            <v-col>
+                                <div>RECOMMENDATIONS</div>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-card>
+            </v-col>
+        </v-row>
 
 
         <v-row justify="center">
