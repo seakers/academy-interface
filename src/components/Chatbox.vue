@@ -34,9 +34,22 @@
                     </v-menu>
                 </v-list-item-title>
 
-                <v-list-item-subtitle class="white--text">
-                    Dialogue History
-                </v-list-item-subtitle>
+                <div style="display: inline-flex;">
+                    <div class="v-list-item__subtitle white--text">
+                        Dialogue History
+                    </div>
+                    <div class="v-list-item__subtitle white--text" style="margin-left: 30%;margin-top: 0.5%;">
+                        <button @click="get_system_message(1)"><p>System Message</p></button>
+                    </div>
+                </div>
+                <div v-if="showModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" @click="showModal = false">&times;</span>
+                        <p style="color: black;">Enter Custom Instructions</p>
+                        <textarea style="height: 75%;width: 90%;background-color: #f6e7e7;" v-model="system_message"></textarea>
+                        <button class="submit-button" @click="update_system_message">Submit</button>
+                    </div>
+                </div>
             </v-list-item-content>
         </v-list-item>
 
@@ -184,6 +197,7 @@
 
                 settings: [0],
                 system_message: "",
+                showModal: false
             }
         },
         computed: {
@@ -256,10 +270,15 @@
             },
 
             /// GET SYSTEM MESSAGE ///////
-            async get_system_message(){
+            async get_system_message(open = 0){
                 let dataResponse = await fetchGet(API_URL + 'assistant/getsysmessage');
                 let system_message_json = await dataResponse.json();
+                console.log("system_message_json", system_message_json)
                 this.system_message = system_message_json.system_message
+                console.log("system_message_json 2", this.system_message)
+                if (open) {
+                    this.showModal = true
+                }
             },
 
             /// SAVE SYSTEM MESSAGE ///////
@@ -423,5 +442,55 @@
 </script>
 
 <style scoped>
+button.submit-button {
+    margin-top: 5%;
+    width: 35%;
+    padding: 10px 20px;
+    background-color: #64c868;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
 
+button.submit-button:hover {
+    background-color: #45a049;
+}
+.modal {
+    /* display: none; */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #111010;
+    width: 75%;
+    height: 60%;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
 </style>
