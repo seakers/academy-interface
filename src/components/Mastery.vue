@@ -294,7 +294,14 @@
                 result = result * 100
                 console.log(result)
                 return result
-            }
+            },
+
+            // GET USER TOPIC WISE PERCENTILE
+            async get_user_report(){
+                let dataResponse = await fetchGet(API_URL + 'assistant/getuserreport');
+                let user_report_json = await dataResponse.json();
+                console.log("user_report_json", user_message_json)
+            },
         },
         apollo: {
             $subscribe: {
@@ -440,7 +447,7 @@
 
         },
         async mounted(){
-
+            this.get_user_report()
         }
     }
 </script>
