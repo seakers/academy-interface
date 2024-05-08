@@ -14,19 +14,28 @@
         <v-row justify="center">
             <v-col>
                 <v-card elevation="0">
-                    <v-card-title>Grade Report</v-card-title>
+                    <v-card-title>User Report</v-card-title>
                     <v-container v-if="test_history.length > 0">
                         <v-row>
                             <v-col>
-                                <div>STRENGTHS</div>
+                                <div style="font-weight: bold;">STRENGTH</div>
+                                <div v-for="(item, idx) in strength_list" :key="idx">
+                                    <div style="margin-top: 2%;margin-bottom: 2%;">{{item}}</div>
+                                </div>
                             </v-col>
                             <v-divider vertical></v-divider>
                             <v-col>
-                                <div>WEAKNESS</div>
+                                <div style="font-weight: bold;">WEAKNESS</div>
+                                <div v-for="(item, idx) in weakness_list" :key="idx">
+                                    <div style="margin-top: 2%;margin-bottom: 2%;">{{item}}</div>
+                                </div>
                             </v-col>
                             <v-divider vertical></v-divider>
                             <v-col>
-                                <div>RECOMMENDATIONS</div>
+                                <div style="font-weight: bold;">RECOMMENDATIONS</div>
+                                <div v-for="(item, idx) in recommendation_list" :key="idx">
+                                    <div style="margin-top: 2%;margin-bottom: 2%;">{{item}}</div>
+                                </div>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -199,6 +208,7 @@
 
 <script>
     import { mapState } from 'vuex';
+    import {fetchGet, fetchPost} from "../scripts/fetch-helpers";
     import {
         ExcelMasterySub,
         TestHistoryMasterySub,
@@ -246,6 +256,9 @@
                     { text: 'Topic', value: 'topic' },
                     { text: 'Proficiency', value: 'proficiency' }
                 ],
+                weakness_list : ["TEST 1", "TEST 2"],
+                strength_list : ["TEST 1", "TEST 2"],
+                recommendation_list : [],
             }
         },
         computed: {
@@ -300,7 +313,10 @@
             async get_user_report(){
                 let dataResponse = await fetchGet(API_URL + 'assistant/getuserreport');
                 let user_report_json = await dataResponse.json();
-                console.log("user_report_json", user_message_json)
+                console.log("user_report_json", user_report_json)
+                this.strength_list = user_report_json['STRENGTHS']
+                this.weakness_list = user_report_json['WEAKNESS']
+                this.recommendation_list = user_report_json['RECOMMENDATIONS']
             },
         },
         apollo: {
