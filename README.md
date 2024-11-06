@@ -8,4 +8,17 @@ sudo nginx -s reload
 
 
 
+scp -i /Users/gapaza/Dropbox/Keys/gabe-master.pem ./* ec2-user@3.144.92.81:/home/ec2-user/academy-interface/src/store/content/ISC-SpaceMissionOverview
+
+scp -i /Users/gapaza/Dropbox/Keys/gabe-master.pem ./* ec2-user@3.144.92.81:/home/ec2-user/academy-interface/src/store/content/ISC-SpaceEnvAndOrbs
+
+scp -i /Users/gapaza/Dropbox/Keys/gabe-master.pem ./* ec2-user@3.144.92.81:/home/ec2-user/academy-interface/src/store/content/ISC-SpacecraftTechAndArch
+
+scp -i /Users/gapaza/Dropbox/Keys/gabe-master.pem ./* ec2-user@3.144.92.81:/home/ec2-user/academy-interface/src/store/content/ISC-SatScientificPayload
+
+
+
+
+
+
 

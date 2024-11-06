@@ -26,8 +26,11 @@
                     <v-card-title>{{ module_name }}</v-card-title>
 
                     <v-card-subtitle>
-                        <div v-for="(topic, idx) in module.topics" :key="idx">{{ topic }}</div>
-                        <div>Minutes Left: {{ remaining_time }}</div>
+<!--                        <div v-for="(topic, idx) in module.topics" :key="idx">{{ topic }}</div>-->
+                        <span v-for="(topic, idx) in module.topics" :key="idx">
+                        {{ topic }}<span v-if="idx < module.topics.length - 1">, </span>
+                      </span>
+<!--                        <div>Minutes Left: {{ remaining_time }}</div>-->
                     </v-card-subtitle>
 
                     <v-divider style="margin-top: 0;"></v-divider>
