@@ -258,6 +258,15 @@ const SlideIdxQuery = gql`
     }
 `;
 
+const SlideIndexQuery = gql`
+
+    query SlideIdxQuery($user_id: Int!, $module_id: Int!) {
+        entry: Join__User_LearningModule(where: {module_id: {_eq: $module_id}, user_id: {_eq: $user_id}}) {
+            slide_idx
+        }
+    }
+`;
+
 const SlideIdxSub = gql`
 
     subscription SlideIdxSub($user_id: Int!, $module_id: Int!) {
@@ -426,7 +435,13 @@ const ClearMessage = gql`
     }
 `;
 
-
+const DeleteAllMessages = gql`
+    mutation DeleteAllMessages($user_id: Int!) {
+        delete_messages(where: {user_id: {_eq: $user_id}}) {
+            affected_rows
+        }
+    }
+`;
 
 const ExamQuery = gql`
 
@@ -500,5 +515,7 @@ export {
     ExamQuery,
     SubmitExamQuery,
     ExperimentQuery,
-    UpdateStage
+    UpdateStage,
+    DeleteAllMessages,
+    SlideIndexQuery
 }

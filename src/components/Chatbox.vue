@@ -44,22 +44,34 @@
 
         <!-- MESSAGES-->
         <v-container fluid style="padding-bottom: 75px;">
-            <v-row dense>
-                <v-slide-y-reverse-transition group>
+            <v-row dense style="overflow: auto;">
+                <v-slide-y-reverse-transition group style="overflow: auto;">
 
                     <v-col v-for="(item, idx) in messages" :key="idx" cols="12" style="padding-top: 6px; padding-bottom: 6px;">
                         <v-card :style="get_message_style(item.sender)">
                             <v-card-title style="padding-top: 10px; padding-bottom: 4px;" class="text-subtitle-2">
                                 <div v-if="item.sender === 'User'">{{username}}</div>
-                                <div v-if="item.sender === 'Daphne'">{{ item.sender }}</div>
+                                <div v-if="item.sender === 'Daphne'" style="display: flex; align-items: center;">{{ item.sender }}
+                                    <!------ Voice ----->
+                                    <v-btn icon color="primary" small @click="speakMessageTTS(item.text,idx)" class="ml-2">
+                                        <v-icon left>
+                                            <template v-if="isMessageLoading(idx)">
+                                                mdi-loading mdi-spin
+                                                </template>
+                                                <template v-else>
+                                                {{ isMessagePlaying(idx) ? 'mdi-stop' : 'mdi-volume-high' }}
+                                                </template>
+                                        </v-icon>
+                                    </v-btn>
+                                    <audio :id="`audio-player-${idx}`" style="display: none;"></audio>
+                                </div>
                                 <v-btn icon right absolute x-small elevation="0" v-on:click="clear_message(item)">
                                     <v-icon color="analogous2">mdi-close</v-icon>
                                 </v-btn>
                             </v-card-title>
-                            <v-card-text style="padding-bottom: 10px;">
-                                {{ item.text }}
+                            <v-card-text style="padding-bottom: 10px;" class="chat-message">
+                                <div v-html="formatMessage(item.text)" class="message-content"></div>
                             </v-card-text>
-
 
                             <v-divider v-if="item.more_info !== null" style="margin-top: 0; margin-bottom: 0;"></v-divider>
                             <v-card-actions v-if="item.more_info !== null" style="padding-top: 8px; padding-left: 16px;">
@@ -144,25 +156,52 @@
 
                 </v-slide-y-reverse-transition>
             </v-row>
+            
         </v-container>
 
 
         <!-- FOOTER -->
         <v-footer fixed color="analogous2" height="90">
-            <v-container>
+            <v-container style="display: contents;">
+                <v-btn
+                            small
+                            text
+                            color="white"
+                            class="mt-n2"
+                            @click="confirmClearHistory"
+                        >
+                            <v-icon left small>mdi-delete</v-icon>
+                            Clear History
+                        </v-btn>
                 <v-row no-gutters>
                     <v-col class="text-center white--text" cols="12">
                         <v-text-field
                             v-model="user_message"
                             outlined
-                            append-icon="mdi-send"
                             background-color="white"
+                            :append-outer-icon="isRecording ? 'mdi-microphone' : 'mdi-microphone-outline'"
+                            :append-icon="isRecording ? ('') : 'mdi-send'"
                             v-on:click:append="send_generative_message()"
+                            v-on:click:append-outer="toggleRecording"
+                            :loading="isRecording"
                             @keydown.enter="send_generative_message()"
                         ></v-text-field>
+                        
                     </v-col>
                 </v-row>
             </v-container>
+            <!-- Confirmation Dialog -->
+            <v-dialog v-model="showClearDialog" max-width="290">
+                <v-card>
+                    <v-card-title>Clear Chat History?</v-card-title>
+                    <v-card-text>This action cannot be undone.</v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text @click="showClearDialog = false">Cancel</v-btn>
+                        <v-btn color="error" text @click="clearHistory">Clear</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </v-footer>
 
     </v-container>
@@ -170,9 +209,12 @@
 
 <script>
     import {mapState} from "vuex";
+    import { marked } from "marked";
     import {MessageSubscription, InsertMessage, ClearMessage, SlidesQueryFast, UpdateSlideIdx} from "../store/queries";
     import {fetchPost} from "../scripts/fetch-helpers";
     import * as _ from "lodash-es";
+import { method } from "lodash";
+import { head } from "lodash";
 
     export default {
         name: "chatbox",
@@ -181,8 +223,15 @@
                 messages_db: null,
                 messages: [],
                 user_message: '',
-
+                showClearDialog: false,
                 settings: [0],
+                isRecording: false,
+                mediaRecorder: null,
+                isSpeaking: false,
+                speechSynthesis: window.speechSynthesis,
+                currentAudio: null,
+                playingMessageIds: {},
+                loadingMessageIds: {},
             }
         },
         computed: {
@@ -210,10 +259,363 @@
                 return this.$store.getters.getCurrentModule;
             },
             currentSlide() {
+                console.log("Current Slide #########################", this.$store.getters.getCurrentSlide)
                 return this.$store.getters.getCurrentSlide;
             }
         },
         methods: {
+            isMessagePlaying(idx) {
+                console.log("Playinggggg", this.playingMessageIds)
+                return this.playingMessageIds[idx] === true;
+    },
+    isMessageLoading(idx) {
+    return this.loadingMessageIds[idx] === true;
+  },
+            confirmClearHistory() {
+                this.showClearDialog = true;
+            },
+            speakMessage(text) {
+                console.log("Speakinggggg", this.isSpeaking)
+                if (this.isSpeaking) {
+                    this.isSpeaking = false;
+                    this.speechSynthesis.cancel();
+                    return;
+                }
+                this.isSpeaking = true;
+                console.log("Is speakinggggg", this.isSpeaking)
+                const utterance = new SpeechSynthesisUtterance(text)
+                utterance.onend = () => {
+                    this.isSpeaking = false;
+                };
+                this.speechSynthesis.speak(utterance)
+            },
+            async speakMessageStreamTTS(text,idx){
+    //   const streamUrl = `${API_URL}/assitant/text_to_speech?text=${encodeURIComponent(
+    //     text
+    //   )}`;
+    //   this.playAudioStream(streamUrl);
+    if (this.isMessagePlaying(idx)) {
+            // If already playing, stop it
+            const audio = document.getElementById(`audio-player-${idx}`);
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+            this.playingMessageIds.delete(idx);
+            return;
+        }
+        try {
+            // Mark this message as playing
+            this.playingMessageIds.add(idx);
+            
+            // Create FormData
+            let reqData = new FormData();
+            reqData.append('audio_text', text);
+            
+            // Make request
+            const response = await fetchPost(API_URL + 'assistant/text_to_speech',reqData);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Get response as blob
+            const audioBlob = await response.blob();
+            const audioUrl = URL.createObjectURL(audioBlob);
+            
+            // Get the audio element and play
+            const audio = document.getElementById(`audio-player-${idx}`);
+            if (!audio) {
+                throw new Error("Audio element not found");
+            }
+            
+            // Set up event handlers
+            audio.onended = () => {
+                this.playingMessageIds.delete(idx);
+                URL.revokeObjectURL(audioUrl);
+            };
+            
+            audio.onerror = () => {
+                this.playingMessageIds.delete(idx);
+                URL.revokeObjectURL(audioUrl);
+            };
+            
+            // Play audio
+            audio.src = audioUrl;
+            await audio.play();
+            
+        } catch (error) {
+            console.error("Error playing audio:", error);
+            this.playingMessageIds.delete(idx);
+        }
+    
+    // let reqData = new FormData();
+    // reqData.append('audio_text', text);
+    
+    // // Get response as blob
+    // let response = await fetchPost(API_URL + 'assistant/text_to_speech',reqData);
+
+    // if (!response.ok) {
+    //   throw new Error(`HTTP error! status: ${response.status}`);
+    // }
+    
+    // // Get response as blob
+    // const audioBlob = await response.blob();
+    
+    // // Create URL from blob
+    // const audioUrl = URL.createObjectURL(audioBlob);
+    
+    // // Play the audio
+    // await this.playAudioStream(audioUrl);
+
+},
+
+playAudioStream(streamUrl) {
+
+      // Reference the audio player element.
+      const audio = this.$refs.audioPlayer;
+      audio.src = streamUrl;
+
+      if (!this.audioContext) {
+        // Initialize the AudioContext only once
+        this.audioContext = new (window.AudioContext ||
+          window.webkitAudioContext)();
+
+        // Create the MediaElementSource node only once
+        this.source = this.audioContext.createMediaElementSource(audio);
+      }
+
+      // Listen for the 'play' event to play the audio
+      // This ensures that the audio is likely to play through without interruption
+      audio
+        .play()
+        .then(() => {
+          console.log("Audio playing...");
+        })
+        .catch((err) => {
+          console.error("Error playing audio:", err);
+        });
+
+      // _You can also add an 'ended' event listener to do something once the playing has ended
+      audio.onended = () => {
+        console.log("Audio ended.");
+      };
+
+            },
+            async speakMessageTTS(text, idx){
+                console.log("Speaking using openai TTS", this.isSpeaking)  
+                if (this.isSpeaking) {
+                    this.isSpeaking = false;
+                    if (this.currentAudio) {
+                        console.log("pausing audio.............")
+                        this.currentAudio.pause();
+                        this.currentAudio = null;
+                    }
+                    this.$set(this.playingMessageIds, idx, false);
+                    return;
+                }
+                else{
+                    this.$set(this.loadingMessageIds, idx, true);
+                    this.isSpeaking = true;
+
+                    let reqData = new FormData();
+                    reqData.append('audio_text', text);
+                    let response = await fetchPost(API_URL + 'assistant/text_to_speech',reqData);
+                    if(!response.ok) return;
+                
+                    // const audioBlob = await response.blob();
+                    // const audioURL = URL.createObjectURL(audioBlob);
+                    // // Create an audio object and play it
+                    // const audio = new Audio(audioURL);
+                    // this.currentAudio = audio;
+                    // audio.onended = () => {
+                    // this.isSpeaking = false;
+                    // this.currentAudio = null;
+                    // };
+                    // audio.play();
+
+                    const mediaSource = new MediaSource();
+                    const audio = new Audio(URL.createObjectURL(mediaSource));
+                    this.$set(this.loadingMessageIds, idx, false);
+                    this.$set(this.playingMessageIds, idx, true);
+                    this.currentAudio = audio;
+                    audio.onended = () => {
+                        this.isSpeaking = false;
+                        this.currentAudio = null;
+                        this.$set(this.playingMessageIds, idx, false);
+                    };
+                
+                audio.onerror = (error) => {
+                    console.error("Audio playback error:", error);
+                    this.isSpeaking = false;
+                    this.currentAudio = null;
+                    this.$set(this.playingMessageIds, idx, false);
+                };
+                
+                // Start playback
+                audio.play();
+
+                    mediaSource.addEventListener('sourceopen', async () => {
+                    const sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
+                    const reader = response.body.getReader();
+                    const pump = async () => {
+                        const { done, value } = await reader.read();
+                        if (done) {
+                        // Wait for any pending updates to finish before ending the stream.
+                        if (sourceBuffer.updating) {
+                            await new Promise(resolve => {
+                            sourceBuffer.addEventListener('updateend', resolve, { once: true });
+                            });
+                        }
+                        mediaSource.endOfStream();
+                        return;
+                        }
+                        while (sourceBuffer.updating) {
+                        await new Promise(r => setTimeout(r, 100));
+                        }
+                        sourceBuffer.appendBuffer(value);
+                        pump();
+                    };
+                    pump();
+});
+                     
+                }         
+            },
+            toggleRecording() {
+                if (this.isRecording) {
+                    // Manually stop
+                    console.log("already recording.............")
+                    if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+                        console.log("stopping recording.............")
+                        this.mediaRecorder.stop()
+                    }
+                } else {
+                    // Start new recording
+                    this.startSpeech()
+                }
+            },
+            async startSpeech() {
+                try{
+                    console.log("trying to record.............")
+                    this.isRecording = true;
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    const audioContext = new AudioContext();
+                    const source = audioContext.createMediaStreamSource(stream);
+                    const analyzer = audioContext.createAnalyser();
+                    source.connect(analyzer);
+
+                    // Calculate background noise level
+                    let backgroundNoise = 0;
+                    const calibrationSamples = [];
+                    
+                    // // Calibrate for 1 second
+                    // for(let i = 0; i < 60; i++) {
+                    //     const array = new Uint8Array(analyzer.frequencyBinCount);
+                    //     analyzer.getByteFrequencyData(array);
+                    //     calibrationSamples.push(array.reduce((a, b) => a + b) / array.length);
+                    //     await new Promise(resolve => setTimeout(resolve, 16)); // ~60fps
+                    // }
+
+                    // backgroundNoise = calibrationSamples.reduce((a, b) => a + b) / calibrationSamples.length;
+                    console.log("Background noise level:", backgroundNoise);
+
+
+                    this.mediaRecorder = new MediaRecorder(stream);
+                    const audioChunks = [];
+                    let silenceStart = null;
+
+                    // Monitor audio levels
+                    const checkAudioLevel = () => {
+                        const array = new Uint8Array(analyzer.frequencyBinCount);
+                        analyzer.getByteFrequencyData(array);
+                        const average = array.reduce((a, b) => a + b) / array.length;
+                        
+                        // Consider silence only if level is close to background noise
+                        if (average < backgroundNoise + 5) {
+                            if (!silenceStart) {
+                                silenceStart = Date.now();
+                            } else if (Date.now() - silenceStart > 2000) {
+                                this.mediaRecorder.stop();
+                                stream.getTracks().forEach(track => track.stop());
+                                return;
+                            }
+                        } else if (average > backgroundNoise + 10) { // Clear voice detected
+                            silenceStart = null;
+                        }
+                        
+                        if (this.mediaRecorder.state === 'recording') {
+                            requestAnimationFrame(checkAudioLevel);
+                        }
+                    };
+
+                    this.mediaRecorder.ondataavailable = (event) => {
+                        console.log("pushed audio")
+                        audioChunks.push(event.data);
+                    };
+
+
+                    this.mediaRecorder.onstop = async () => {
+                        console.log("on stop")
+                        this.isRecording = false;
+                        const audioBlob = new Blob(audioChunks);
+                        let transcribeData = new FormData();
+                        transcribeData.append('audio', audioBlob);
+                        let transcribeResponse = await fetchPost(API_URL + 'assistant/transcribe', transcribeData);
+                        if (transcribeResponse.ok) {
+                            let data = await transcribeResponse.json();
+                            console.log('--> TRANSCRIPTION:', data);
+                            await this.insert_message(data['response'], this.user_message_object.sender);
+                                this.$nextTick(() => {
+                                const container = this.$el.parentElement;
+                                if (container) {
+                                    console.log("scrollinggggg", container, container.scrollHeight)
+                                    container.scrollTo({
+                                        top: container.scrollHeight,
+                                        behavior: 'smooth'
+                                    });
+                                }
+                            });
+
+                            let reqData1 = new FormData();
+                            reqData1.append('command', data['response']);
+                            reqData1.append('route', this.$route.path);
+
+                            const conversationHistory = this.messages.slice(-8).map(msg => ({
+                                                role: msg.sender.toLowerCase(),
+                                                content: msg.text
+                                            }));
+
+                            // ############## ADD FOR GPT VISION (SLIDE INFO) #####################
+                            reqData1.append('conversation_history', JSON.stringify(conversationHistory));
+                            reqData1.append('vision', true);
+                            let slideInfo = JSON.stringify({topic: this.currentTopic, module: this.currentModule, slide: this.currentSlide});
+                            reqData1.append('slide_info', slideInfo);
+                            // #######################################################
+
+                            let response = '';
+                            let dataResponse_lm = await fetchPost(API_URL + 'assistant/gmcommand',reqData1);
+                            if (dataResponse_lm.ok) {
+                                let data_lm = await dataResponse_lm.json();
+                                // console.log('--> CONFIDENCE DATA',data_lm)
+                                if(data_lm['response'] !== 'empty'){
+                                response = data_lm['response'];
+                                console.log("--> RESPONSE", response);
+                                }
+                            }
+                            console.log('--> INSERTING MESSAGE');
+                            await this.insert_message(response, 'Daphne', null);
+                            this.user_message = '';
+                        }
+                    }
+
+                    this.mediaRecorder.start();
+                    checkAudioLevel();
+                }                
+                catch(err){
+                    console.log(err);
+                    this.isRecording = false;
+                }
+            },
             async go_to_slide(module, slide){
                 console.log('--> GOING TO SLIDE:', module, slide);
 
@@ -258,6 +660,21 @@
                     return 'border-radius: 28px 28px 28px 4px; margin-right: 40px;'
                 }
                 return 'border-radius: 28px 28px 4px 28px; margin-left: 40px;'
+            },
+            formatMessage(text) {
+                if (!text) return '';
+                text = text
+                    .replace(/\n{3,}/g, '\n\n')
+                    .trim();
+
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    headerIds: false,
+                    mangle: false
+                });
+        
+                return marked(text);
             },
             async send_message(){
                 console.log('--> SENDING MESSAGE');
@@ -307,15 +724,34 @@
 
                 // --> 1. Add message to current messages string
                 await this.insert_message(this.user_message_object.text, this.user_message_object.sender);
+                
+                this.$nextTick(() => {
+                    const container = this.$el.parentElement;
+                    if (container) {
+                        console.log("scrollinggggg", container, container.scrollHeight)
+                        container.scrollTo({
+                            top: container.scrollHeight,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
                 let reqData1 = new FormData();
+                
                 reqData1.append('command', this.user_message_object.text);
                 reqData1.append('route', this.$route.path);
 
+                const conversationHistory = this.messages.slice(-8).map(msg => ({
+                                                role: msg.sender.toLowerCase(),
+                                                content: msg.text
+                                            }));
+
                 // ############## ADD FOR GPT VISION (SLIDE INFO) #####################
+                reqData1.append('conversation_history', JSON.stringify(conversationHistory));
                 reqData1.append('vision', true);
                 let slideInfo = JSON.stringify({topic: this.currentTopic, module: this.currentModule, slide: this.currentSlide});
                 reqData1.append('slide_info', slideInfo);
                 // #######################################################
+                
 
                 let response = '';
                 let dataResponse_lm = await fetchPost(API_URL + 'assistant/gmcommand',reqData1);
@@ -329,6 +765,8 @@
                 }
                 console.log('--> INSERTING MESSAGE');
                 await this.insert_message(response, 'Daphne', null);
+                this.user_message = '';
+                
             },
             async insert_message(text, sender, more_info){
                 let mutation = await this.$apollo.mutate({
@@ -351,13 +789,39 @@
                     },
                     update: (cache, { data: { result } }) => {},
                 });
-            }
+            },
+            async clearHistory() {
+                console.log('--> CLEARING ALL MESSAGES:');
+                for (let msg of this.messages) {
+                    await this.$apollo.mutate({
+                        mutation: ClearMessage,
+                        variables: {
+                            message_id: msg.id
+                        },
+                        update: (cache, { data: { result } }) => {},
+                    });
+                }
+                this.showClearDialog = false;
+            },
         },
         watch: {
-            messages() {
-                // --> Scroll to the bottom of the message window
-                console.log('--> SCROLLING DOWN');
-                // let cmessage = this.$el.querySelector('#cmessage')
+            messages:{
+                handler() {
+                    this.$nextTick(() => {
+                        const container = this.$el.parentElement;
+                        if (container) {
+                            console.log("scrollinggggg", container, container.scrollHeight)
+                            container.scrollTo({
+                                top: container.scrollHeight,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                },
+            deep: true
+            },
+            '$route.path'(newPath){
+
             }
         },
         apollo: {
@@ -406,5 +870,42 @@
 </script>
 
 <style scoped>
+.chat-message ::v-deep a {
+    color: #1976D2;
+    text-decoration: none;
+}
+.chat-message ::v-deep a:hover {
+    text-decoration: underline;
+}
+.message-content {
+    white-space: normal;
+    word-break: break-word;
+}
+
+.message-content ::v-deep {
+    p { 
+        margin: 0.5em 0;
+        line-height: 1.4;
+        margin-bottom: 1px;
+    }
+    
+    h1, h2, h3, h4 { 
+        margin: 0.8em 0 0.4em 0;
+    }
+    
+    ul, ol { 
+        margin: 0.5em 0;
+        padding-left: 1.2em;
+    }
+    
+    li + li {
+        margin-top: 0.3em;
+    }
+    
+    hr {
+        margin: 0.8em 0;
+    }
+}
+
 
 </style>

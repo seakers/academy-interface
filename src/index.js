@@ -35,7 +35,7 @@ const routes = [
     { path: '/mastery', component: Mastery },
 
     // Learning modules
-    { path: '/LearningModule/:name/:id', component: LearningModule, props:true },
+    { path: '/LearningModule/:name/:id/:slide_idx?', component: LearningModule, props:true },
 
     // Testing
     { path: '/take-exam', component: TakeExam },

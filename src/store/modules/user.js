@@ -178,12 +178,16 @@ const actions = {
     async start_quiz({ state, commit, dispatch }){
         let end_time = Math.floor(Date.now() / 1000) + state.quiz_dur;
         await commit('set_section_end_time', end_time);
+        commit('set_chatbox_value', false);
+        commit('set_chatbox_allowed_value', false);
+        console.log("################## QUIZ STARTED ##################")
     },
     async start_exam({ state, commit, dispatch}){
         let end_time = Math.floor(Date.now() / 1000) + state.exam_dur;
         await commit('set_section_end_time', end_time);
-        await commit('set_chatbox_value', false);
-        await commit('set_chatbox_allowed_value', false);
+        commit('set_chatbox_value', false);
+        commit('set_chatbox_allowed_value', false);
+        console.log("################## EXAM STARTED ##################")
     },
 };
 
@@ -225,9 +229,11 @@ const mutations = {
             }
             state.chatbox = chatbox;
         }
+        console.log("################## CHATBOX SET ##################", state.chatbox)
     },
     set_chatbox_allowed_value(state, chatbox_allowed){
         state.chatbox_allowed = chatbox_allowed;
+        console.log("################## CHATBOX ALLOWED SET ##################", state.chatbox_allowed)
     },
 
 

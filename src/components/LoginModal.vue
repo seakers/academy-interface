@@ -64,11 +64,18 @@
                 // --> 1. Send login request
                 let reqData = new FormData();
                 reqData.append("username", this.username);
+                // console.log('username: ' + this.username, reqData);
                 reqData.append("password", this.password);
+        //         console.log('Form Data Contents:');
+        // for (let pair of reqData.entries()) {
+        //     console.log(pair[0] + ': ' + pair[1]);
+        // }
+
                 let dataResponse = await fetchPost(API_URL + 'auth/login', reqData);
 
                 // --> 2. Handle response
                 if (dataResponse.ok) {
+                    console.log('Login response OK');
                     let data = await dataResponse.json();
                     if (data['status'] === 'logged_in') {
                         await this.$store.commit('set_user_id', data['pk']);
